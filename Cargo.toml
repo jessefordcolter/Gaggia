@@ -1,0 +1,12 @@
+[workspace]
+members = [
+    "drivers/fg304",
+    "drivers/max6675",
+    "drivers/ads1015",
+    "drivers/xdb401",
+    "drivers/hx711",
+    "drivers/gc9a01",
+    "drivers/encoder",
+    "runner",
+]
+resolver = "2"

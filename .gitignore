@@ -1,0 +1,23 @@
+# Rust build artifacts
+target/
+
+# macOS junk
+.DS_Store
+**/.DS_Store
+
+# Compiled firmware
+*.elf
+*.bin
+*.map
+
+# Editor files
+.vscode/settings.json
+
+# Old C archive
+archive/
+
+# Third-party datasheets (publicly available online)
+hardware/datasheets/
+
+# Large binary files we didn't create
+*.pdf
