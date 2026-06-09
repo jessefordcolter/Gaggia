@@ -144,10 +144,10 @@ the integrated driver board.
 **2. TACHO OUT (yellow) is 0–5 V — requires voltage divider before STM32.**
 Use R1=10 kΩ, R2=27 kΩ. STM32 GPIO max is 3.3 V.
 
-**3. SPEED_IN (orange) needs 0–5 V for full 5000 RPM range.**
-STM32F411 DAC outputs 0–3.3 V → max ~3300 RPM without op-amp scaling.
-STM32F411 has a true 12-bit DAC — better resolution than ESP32.
-For full 5000 RPM range, scale 3.3 V → 5 V via op-amp (e.g. MCP6002).
+**3. SPEED_IN (orange): STM32F411 DAC (0–3.3 V) is sufficient for this build.**
+Espresso flow rates (1–3 mL/s) require ~600–900 RPM, well under the ~3300 RPM
+achievable at 3.3 V. No op-amp or level shifter is needed.
+The 12-bit DAC gives fine resolution across the entire espresso operating range.
 
 **4. DIRECTION (green) needs >4 V for CCW — STM32 3.3 V GPIO won't reach this.**
 Tie to GND (via 10 kΩ) for permanent CW operation.

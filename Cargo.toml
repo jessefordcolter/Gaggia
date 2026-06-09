@@ -5,8 +5,18 @@ members = [
     "drivers/ads1015",
     "drivers/xdb401",
     "drivers/hx711",
-    "drivers/gc9a01",
-    "drivers/encoder",
+    "drivers/vl53l0x",
+    "drivers/esp8266",
     "runner",
 ]
 resolver = "2"
+
+[profile.release]
+opt-level = "s"       # optimize for size
+lto = true
+codegen-units = 1
+debug = 2             # keep debug symbols in release
+
+[profile.dev]
+opt-level = 1         # light optimization — dev builds are very slow at opt-level 0
+debug = 2

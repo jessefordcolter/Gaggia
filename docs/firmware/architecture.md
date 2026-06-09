@@ -37,10 +37,11 @@ Drivers are built against `embedded-hal` and `embedded-hal-async` traits. The `r
 
 | Driver | Trait required |
 |---|---|
-| `fg304` | `DacChannel` |
+| `esp8266` | `embedded_io::Read` + `Write` |
+| `fg304` | DAC output (custom trait — embedded-hal has none) |
 | `max6675` | `SpiDevice` |
 | `ads1015` | `I2c` |
-| `xdb401` | uses `ads1015` |
+| `xdb401` | pure math — no hardware trait |
 | `hx711` | `InputPin` + `OutputPin` |
 | `vl53l0x` | `I2c` |
 
@@ -112,10 +113,11 @@ Safety checks run on every cycle before any actuator output.
 | File | Purpose |
 |---|---|
 | `runner/src/main.rs` | Entry point, Embassy executor, state machine |
+| `drivers/esp8266/src/lib.rs` | ESP8266 AT command Wi-Fi bridge — UART |
 | `drivers/fg304/src/lib.rs` | FG304 pump driver — DAC speed + TACHO input |
 | `drivers/max6675/src/lib.rs` | MAX6675 thermocouple reader — SPI |
 | `drivers/ads1015/src/lib.rs` | ADS1015 ADC driver — I2C |
-| `drivers/xdb401/src/lib.rs` | XDB401 pressure conversion — uses ads1015 |
+| `drivers/xdb401/src/lib.rs` | XDB401 pressure conversion — pure math |
 | `drivers/hx711/src/lib.rs` | HX711 load cell ADC — bit-bang GPIO |
 | `drivers/vl53l0x/src/lib.rs` | VL53L0X water level sensor — I2C |
 | `docs/firmware/state_machine.md` | State definitions and transitions |

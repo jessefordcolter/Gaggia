@@ -1,6 +1,6 @@
 # GaggiaMod — Development Roadmap
 
-Phases are ordered by safety-criticality and dependency.
+Phases are ordered by development dependency.
 Complete each phase before starting the next.
 Each phase produces a working, testable result.
 
@@ -18,23 +18,47 @@ Each phase produces a working, testable result.
 - [x] Write memory.x from verified datasheet values
 - [x] Update all documentation for Rust/Embassy/STM32
 - [x] Initialize git repository and push to GitHub
+- [x] Scaffold all driver crates (Cargo.toml + empty lib.rs)
+- [x] Scaffold runner crate (Cargo.toml + empty main.rs)
 - [ ] Install VSCode extensions and configure rust-analyzer
-- [ ] Scaffold all driver crates (Cargo.toml + empty lib.rs)
-- [ ] Scaffold runner crate (Cargo.toml + empty main.rs)
-- [ ] Confirm workspace builds with cargo build
+- [ ] Confirm workspace builds with `cargo build`
 
 **Milestone:** Clean Rust workspace builds without errors.
 
 ---
 
-## Phase 1 — FG304 Pump Driver
+## Phase 1 — ESP8266 Wi-Fi Bridge
+
+**Goal:** Get the tablet talking to the Blackpill over Wi-Fi before writing any sensor drivers.
+Wi-Fi comes first because every subsequent phase benefits from over-air logging and monitoring.
+
+**Deliverables:**
+
+- Implement `drivers/esp8266/src/lib.rs`
+- AT command driver over UART
+- Connect to home Wi-Fi network
+- Send JSON payloads to Nexus 7 tablet
+- Full unit test suite
+
+**Testing:**
+
+- [ ] Driver builds against embedded-io traits
+- [ ] Unit tests pass on host machine
+- [ ] ESP8266 connects to Wi-Fi
+- [ ] STM32 can send a JSON payload visible on the Nexus 7
+
+**Milestone:** Any data the firmware produces can be monitored on the tablet. All subsequent phases build on this.
+
+---
+
+## Phase 2 — FG304 Pump Driver
 
 **Goal:** Write and test the pump driver in isolation before touching the machine.
 
 **Deliverables:**
 
 - Implement `drivers/fg304/src/lib.rs`
-- DAC speed control (0–0.8 V for espresso range)
+- DAC speed control (0–3.3 V covers full espresso operating range)
 - TACHO feedback reading (RPM = Hz × 60 / 32)
 - Fault pin monitoring
 - Full unit test suite
@@ -52,7 +76,7 @@ Each phase produces a working, testable result.
 
 ---
 
-## Phase 2 — MAX6675 Temperature Driver
+## Phase 3 — MAX6675 Temperature Driver
 
 **Goal:** Read boiler temperature reliably.
 
@@ -76,7 +100,7 @@ Each phase produces a working, testable result.
 
 ---
 
-## Phase 3 — ADS1015 + XDB401 Pressure Driver
+## Phase 4 — ADS1015 + XDB401 Pressure Driver
 
 **Goal:** Read brew pressure reliably via I2C ADC.
 
@@ -99,11 +123,11 @@ Each phase produces a working, testable result.
 
 ---
 
-## Phase 4 — Temperature PID + SSR Control
+## Phase 5 — Temperature PID + SSR Control
 
 **Goal:** Replace stock thermostat with PID boiler control.
 
-**Prerequisites:** Phase 2 complete.
+**Prerequisites:** Phase 3 complete.
 
 **Deliverables:**
 
@@ -125,11 +149,11 @@ Pump is still stock Ulka at this phase.
 
 ---
 
-## Phase 5 — Pump Integration + Pressure PID
+## Phase 6 — Pump Integration + Pressure PID
 
 **Goal:** Replace Ulka pump with FG304, implement closed-loop pressure control.
 
-**Prerequisites:** Phases 1, 3, 4 complete.
+**Prerequisites:** Phases 2, 4, 5 complete.
 
 **Deliverables:**
 
@@ -137,7 +161,7 @@ Pump is still stock Ulka at this phase.
 - Pressure PID targeting 9 bar during brewing
 - Pump fault detection → FAULT state
 - Pump restart-after-fault sequence (speed = 0 required)
-- Low-water stub interlock (digital sensor placeholder until Phase 6)
+- Low-water stub interlock (digital sensor placeholder until Phase 7)
 
 **Testing:**
 
@@ -151,11 +175,11 @@ Pump is still stock Ulka at this phase.
 
 ---
 
-## Phase 6 — Water Level Safety
+## Phase 7 — Water Level Safety
 
 **Goal:** Dry-pump prevention via VL53L0X ToF sensor.
 
-**Prerequisites:** Phase 5 complete.
+**Prerequisites:** Phase 6 complete.
 
 **Deliverables:**
 
@@ -176,11 +200,11 @@ Pump is still stock Ulka at this phase.
 
 ---
 
-## Phase 7 — HX711 Scale + Dose-by-Weight
+## Phase 8 — HX711 Scale + Dose-by-Weight
 
 **Goal:** Auto-stop shot at target output weight.
 
-**Prerequisites:** Phase 5 complete.
+**Prerequisites:** Phase 6 complete.
 
 **Deliverables:**
 
@@ -199,27 +223,11 @@ Pump is still stock Ulka at this phase.
 
 ---
 
-## Phase 8 — Wi-Fi Telemetry
-
-**Goal:** Shot data logging to Nexus 7 tablet via ESP8266.
-
-**Prerequisites:** Phase 7 complete.
-
-**Deliverables:**
-
-- UART bridge to ESP8266
-- Shot log: timestamp, weight, peak pressure, average temp, brew time
-- JSON format over Wi-Fi to Nexus 7 tablet
-- Nexus 7 web dashboard displays live and historical shot data
-
-**Milestone:** Full scientific logging for recipe development.
-
----
-
 ## Phase 9 — Hardening & Installation
 
 **Goal:** Production-ready firmware permanently installed in machine.
 
+- [ ] Enable watchdog timer — resets chip if firmware hangs, SSR defaults to off
 - [ ] Comprehensive unit tests for all drivers
 - [ ] PCB design — replace breadboard with custom control board
 - [ ] Cable management and permanent installation
@@ -234,7 +242,6 @@ Pump is still stock Ulka at this phase.
 ## Quick-Start (Phase 0 → Phase 1)
 
 1. Open workspace: `code ~/projects/Gaggia`
-2. Scaffold driver crates
-3. Run `cargo build` — confirm 0 errors
-4. Connect ST-Link debugger
-5. Start with `drivers/fg304` — first driver to write
+2. Run `cargo build` — confirm 0 errors
+3. Connect ST-Link debugger
+4. Start with `drivers/esp8266` — Wi-Fi bridge first

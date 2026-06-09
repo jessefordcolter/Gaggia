@@ -1,0 +1,8 @@
+[package]
+name = "xdb401"
+version = "0.1.0"
+edition = "2021"
+
+# Pure math conversion — no hardware traits, no dependencies.
+# Takes raw ADS1015 counts and converts to pressure in bar.
+[dependencies]

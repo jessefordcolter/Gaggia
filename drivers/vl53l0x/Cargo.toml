@@ -1,0 +1,10 @@
+[package]
+name = "vl53l0x"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+embedded-hal = "1.0"
+
+[dev-dependencies]
+embedded-hal-mock = "0.11"

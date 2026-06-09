@@ -1,0 +1,43 @@
+[package]
+name = "runner"
+version = "0.1.0"
+edition = "2021"
+
+# The runner is the only crate that imports embassy-stm32.
+# All drivers depend only on embedded-hal traits.
+
+[dependencies]
+# Embassy async runtime
+embassy-executor = { version = "0.6", features = [
+    "arch-cortex-m",
+    "executor-thread",
+] }
+embassy-stm32 = { version = "0.1", features = [
+    "stm32f411ce",
+    "time-driver-any",
+    "exti",
+    "defmt",
+] }
+embassy-time = { version = "0.3" }
+embassy-sync = { version = "0.6" }
+
+# ARM bare-metal support
+cortex-m = { version = "0.7", features = [
+    "inline-asm",
+    "critical-section-single-core",
+] }
+cortex-m-rt = "0.7"
+
+# Logging over RTT (J-Link / probe-rs)
+defmt = "0.3"
+defmt-rtt = "0.4"
+panic-probe = { version = "0.3", features = ["print-defmt"] }
+
+# Local driver crates
+fg304 = { path = "../drivers/fg304" }
+max6675 = { path = "../drivers/max6675" }
+ads1015 = { path = "../drivers/ads1015" }
+xdb401 = { path = "../drivers/xdb401" }
+hx711 = { path = "../drivers/hx711" }
+vl53l0x = { path = "../drivers/vl53l0x" }
+esp8266 = { path = "../drivers/esp8266" }

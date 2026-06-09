@@ -82,8 +82,8 @@
 - Tubing rated minimum 18 bar (1.5× safety factor on 12 bar max).
 - FG304 requires 16.5–29 V DC — dedicated 24 V PSU required.
 - ESP8266 may need its own 3.3 V regulator — verify vs Blackpill LDO rating.
-- Pump speed limited to ~800 RPM for espresso flow rates — STM32 DAC
-  (0–3.3 V) is sufficient, no op-amp required.
+- Espresso flow rates (1–3 mL/s) require ~600–900 RPM — well under the ~3300 RPM
+  achievable at 3.3 V. STM32 DAC is sufficient; no op-amp required.
 - TACHO OUT (0–5 V) requires 10 kΩ / 27 kΩ voltage divider before STM32 GPIO.
 - Pressure sensor AO (0.5–4.5 V) requires 10 kΩ / 27 kΩ voltage divider
   before ADS1015 AIN0.
