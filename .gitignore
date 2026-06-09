@@ -22,3 +22,6 @@ hardware/datasheets/
 # Large binary files we didn't create
 *.pdf
 soul.md
+
+# ESP8266 AT firmware SDK — download separately, see hardware/firmware/esp8266/FLASH.md
+hardware/firmware/esp8266/ESP8266_NONOS_SDK*/
