@@ -9,7 +9,7 @@ Each phase produces a working, testable result.
 
 ---
 
-## Phase 0 — Foundation *(current phase)*
+## Phase 0 — Foundation ✅ *complete*
 
 **Goal:** Clean workspace, working build environment, all docs updated.
 
@@ -20,14 +20,15 @@ Each phase produces a working, testable result.
 - [x] Initialize git repository and push to GitHub
 - [x] Scaffold all driver crates (Cargo.toml + empty lib.rs)
 - [x] Scaffold runner crate (Cargo.toml + empty main.rs)
-- [ ] Install VSCode extensions and configure rust-analyzer
-- [ ] Confirm workspace builds with `cargo build`
+- [x] Install VSCode extensions and configure rust-analyzer
+- [x] Confirm workspace builds with `cargo build`
+- [x] Flash ESP-01 with AT firmware — verified responding to AT commands
 
-**Milestone:** Clean Rust workspace builds without errors.
+**Milestone:** Clean Rust workspace builds without errors. ✅
 
 ---
 
-## Phase 1 — ESP8266 Wi-Fi Bridge
+## Phase 1 — ESP8266 Wi-Fi Bridge *(current phase)*
 
 **Goal:** Get the tablet talking to the Blackpill over Wi-Fi before writing any sensor drivers.
 Wi-Fi comes first because every subsequent phase benefits from over-air logging and monitoring.
